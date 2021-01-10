@@ -14,6 +14,8 @@
             "cwd": "${workspaceFolder}",
             "externalConsole": false,
             "args": [],
+            "MIMode": "gdb",
+            "preLaunchTask": "Build"
         },
         {
             "name": "Run Debbuging(Windows)",
@@ -25,6 +27,17 @@
             "cwd": "${workspaceFolder}",
             "externalConsole": false,
             "args": [],
+            "preLaunchTask": "Build"
+        },
+        {
+            "name": "Run Debbuging(lldb)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/${config:CMakeSettings.BinaryDir}/${config:CMakeSettings.ProjectName}",
+            "cwd": "${workspaceFolder}",
+            "args": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "Build"
         }
     ]
 }
