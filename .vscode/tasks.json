@@ -5,13 +5,29 @@
 			"type": "shell",
 			"label": "Config",
 			"command": "cmake",
-			"args": [
-				"-G", "${config:CMakeSettings.Generator}",
-				"-H${config:CMakeSettings.SourceDir}",
-				"-B${config:CMakeSettings.BinaryDir}",
-				"-DEXTERNAL_INPUT_PROJECT_NAME=${config:CMakeSettings.ProjectName}",
-				"-DCMAKE_BUILD_TYPE=${config:CMakeSettings.BuildType}"
-			],
+			"linux": {
+				"args": [
+					"-G", "${config:CMakeSettings.Generator}",
+					"-H${config:CMakeSettings.SourceDir}",
+					"-B${config:CMakeSettings.BinaryDir}",
+					"-DEXTERNAL_INPUT_PROJECT_NAME:STRING=${config:CMakeSettings.ProjectName}",
+					"-DCMAKE_BUILD_TYPE=${config:CMakeSettings.BuildType}",
+					"-DUSE32bit:BOOL=${config:CMakeSettings.USE32bit}",
+					"-DCompilerID:STRING=${config:CMakeSettings.CompilerID}",
+					"-DLLVM_VERSION:STRING=${config:CMakeSettings.LLVM_VERSION}"
+				],
+			},
+			"windows": {
+				"args": [
+					"-G", "${config:CMakeSettings.Generator}",
+					"-H${config:CMakeSettings.SourceDir}",
+					"-B${config:CMakeSettings.BinaryDir}",
+					"-DEXTERNAL_INPUT_PROJECT_NAME:STRING=${config:CMakeSettings.ProjectName}",
+					"-DCMAKE_BUILD_TYPE=${config:CMakeSettings.BuildType}",
+					"-DUSE32bit:BOOL=${config:CMakeSettings.USE32bit}",
+					"-DCompilerID:STRING=${config:CMakeSettings.CompilerID}",
+				],
+			},
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},

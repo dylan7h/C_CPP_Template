@@ -1,9 +1,15 @@
 {
     "CMakeSettings": {
-        "ProjectName": "CppStudy",
-        "Generator": "Unix Makefiles",
-        "BinaryDir": "Build",
-        "SourceDir": ".",
-        "BuildType": "DEBUG"
+        "ProjectName":  "CppStudy",
+        "Generator":    "Ninja",
+        "CompilerID":   "clang",
+        "BinaryDir":    "Build",
+        "SourceDir":    ".",
+        "BuildType":    "DEBUG",
+        "USE32bit":     "false",
+        "LLVM_VERSION": "10"
+    },
+    "files.associations": {
+        "iostream": "cpp"
     },
 }
