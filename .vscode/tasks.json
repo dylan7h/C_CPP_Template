@@ -1,0 +1,81 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Config",
+			"command": "cmake",
+			"args": [
+				"-G", "${config:CMakeSettings.Generator}",
+				"-H${config:CMakeSettings.SourceDir}",
+				"-B${config:CMakeSettings.BinaryDir}",
+				"-DEXTERNAL_INPUT_PROJECT_NAME=${config:CMakeSettings.ProjectName}",
+				"-DCMAKE_BUILD_TYPE=${config:CMakeSettings.BuildType}"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "shell",
+			"label": "Build",
+			"command": "cmake",
+			"args": [
+				"--build", "${config:CMakeSettings.BinaryDir}",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "shell",
+			"label": "Clean",
+			"command": "cmake",
+			"args": [
+				"--build", "${config:CMakeSettings.BinaryDir}", "--target", "clean",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "shell",
+			"label": "CacheClear",
+			"command": "cmake",
+			"args": [
+				"-E", "remove_directory", "${config:CMakeSettings.BinaryDir}",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}

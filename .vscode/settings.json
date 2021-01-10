@@ -1,0 +1,9 @@
+{
+    "CMakeSettings": {
+        "ProjectName": "CppStudy",
+        "Generator": "Unix Makefiles",
+        "BinaryDir": "Build",
+        "SourceDir": ".",
+        "BuildType": "DEBUG"
+    },
+}
