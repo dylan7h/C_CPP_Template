@@ -13,7 +13,8 @@
             "compilerPath": "C:/Program Files (x86)/LLVM/bin/clang++.exe",
             "cStandard": "c99",
             "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x86"
+            "intelliSenseMode": "clang-x86",
+            "compileCommands": "${workspaceFolder}/Build/compile_commands.json"
         },
         {
             "name": "Linux",
@@ -24,7 +25,8 @@
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c99",
             "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x86"
+            "intelliSenseMode": "clang-x86",
+            "compileCommands": "${workspaceFolder}/Build/compile_commands.json"
         }
     ],
     "version": 4

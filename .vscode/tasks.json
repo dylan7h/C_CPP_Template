@@ -14,6 +14,7 @@
 					"-DCMAKE_BUILD_TYPE=${config:CMakeSettings.BuildType}",
 					"-DUSE32bit:BOOL=${config:CMakeSettings.USE32bit}",
 					"-DCompilerID:STRING=${config:CMakeSettings.CompilerID}",
+					"-DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE",
 					"-DLLVM_VERSION:STRING=${config:CMakeSettings.LLVM_VERSION}"
 				],
 			},
@@ -25,6 +26,7 @@
 					"-DEXTERNAL_INPUT_PROJECT_NAME:STRING=${config:CMakeSettings.ProjectName}",
 					"-DCMAKE_BUILD_TYPE=${config:CMakeSettings.BuildType}",
 					"-DUSE32bit:BOOL=${config:CMakeSettings.USE32bit}",
+					"-DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE",
 					"-DCompilerID:STRING=${config:CMakeSettings.CompilerID}",
 				],
 			},
