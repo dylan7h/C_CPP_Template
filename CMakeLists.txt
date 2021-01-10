@@ -31,9 +31,14 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_PATH})
 # Register Pre Define Macros
 target_compile_definitions(${PROJECT_NAME} PUBLIC ${DEFINE_LISTS})
 
+# Target Property
+set_target_properties(${PROJECT_NAME} PROPERTIES C_STANDARD     99 C_STANDARD_REQUIRED      ON)
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD   17 CXX_STANDARD_REQUIRED    ON)
+
 # Display Source Lists
 message(STATUS "===================== Source Lists =====================")
 foreach(var ${SOURCE_FILES})
     message(STATUS ${var})
 endforeach()
 message(STATUS "========================================================")
+

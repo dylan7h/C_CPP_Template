@@ -7,7 +7,8 @@
 			"command": "cmake",
 			"linux": {
 				"args": [
-					"-G", "${config:CMakeSettings.Generator}",
+					"-G",
+					"${config:CMakeSettings.Generator}",
 					"-H${config:CMakeSettings.SourceDir}",
 					"-B${config:CMakeSettings.BinaryDir}",
 					"-DEXTERNAL_INPUT_PROJECT_NAME:STRING=${config:CMakeSettings.ProjectName}",
@@ -16,19 +17,20 @@
 					"-DCompilerID:STRING=${config:CMakeSettings.CompilerID}",
 					"-DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE",
 					"-DLLVM_VERSION:STRING=${config:CMakeSettings.LLVM_VERSION}"
-				],
+				]
 			},
 			"windows": {
 				"args": [
-					"-G", "${config:CMakeSettings.Generator}",
+					"-G",
+					"${config:CMakeSettings.Generator}",
 					"-H${config:CMakeSettings.SourceDir}",
 					"-B${config:CMakeSettings.BinaryDir}",
 					"-DEXTERNAL_INPUT_PROJECT_NAME:STRING=${config:CMakeSettings.ProjectName}",
 					"-DCMAKE_BUILD_TYPE=${config:CMakeSettings.BuildType}",
 					"-DUSE32bit:BOOL=${config:CMakeSettings.USE32bit}",
 					"-DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE",
-					"-DCompilerID:STRING=${config:CMakeSettings.CompilerID}",
-				],
+					"-DCompilerID:STRING=${config:CMakeSettings.CompilerID}"
+				]
 			},
 			"options": {
 				"cwd": "${workspaceFolder}"
@@ -46,25 +48,49 @@
 			"label": "Build",
 			"command": "cmake",
 			"args": [
-				"--build", "${config:CMakeSettings.BinaryDir}",
+				"--build",
+				"${config:CMakeSettings.BinaryDir}"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},
-			"problemMatcher": [
-				"$gcc"
-			],
+			"problemMatcher": {
+				"fileLocation": [
+					"autoDetect",
+					"${workspaceFolder}/Build"
+				],
+				"base": "$gcc"
+			},
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			}
+			},
+			"dependsOn": "Config"
+		},
+		{
+			"type": "shell",
+			"label": "Run Without Debugging",
+			"command": "${workspaceFolder}/${config:CMakeSettings.BinaryDir}/${config:CMakeSettings.ProjectName}",
+			"args": [],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"dependsOn": "build",
+			"problemMatcher": []
 		},
 		{
 			"type": "shell",
 			"label": "Clean",
 			"command": "cmake",
 			"args": [
-				"--build", "${config:CMakeSettings.BinaryDir}", "--target", "clean",
+				"--build",
+				"${config:CMakeSettings.BinaryDir}",
+				"--target",
+				"clean"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"
@@ -82,7 +108,9 @@
 			"label": "CacheClear",
 			"command": "cmake",
 			"args": [
-				"-E", "remove_directory", "${config:CMakeSettings.BinaryDir}",
+				"-E",
+				"remove_directory",
+				"${config:CMakeSettings.BinaryDir}"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"
