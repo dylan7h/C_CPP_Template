@@ -4,41 +4,11 @@ include(CMake/rule.cmake)
 
 project(
     # Project Name
-    ${EXTERNAL_INPUT_PROJECT_NAME}
+    "DirectStorageRW"
     # Version Info
     VERSION 0.0.1
     # Description
     DESCRIPTION "C++ Study"
-    # Language
-    LANGUAGES CXX
 )
 
-# Auto Searching Source File Lists
-FILE(GLOB_RECURSE SOURCE_FILES Source/*.s Source/*.S Source/*.c Source/*.cc Source/*.cxx Source/*.cpp Source/*.hpp)
-
-# Define Macro Lists
-list(APPEND DEFINE_LISTS )
-
-# Include Path
-list(APPEND INCLUDE_PATH Include)
-
-# Executale Target 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
-
-# Register Include Path 
-target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_PATH})
-
-# Register Pre Define Macros
-target_compile_definitions(${PROJECT_NAME} PUBLIC ${DEFINE_LISTS})
-
-# Target Property
-set_target_properties(${PROJECT_NAME} PROPERTIES C_STANDARD     99 C_STANDARD_REQUIRED      ON)
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD   17 CXX_STANDARD_REQUIRED    ON)
-
-# Display Source Lists
-message(STATUS "===================== Source Lists =====================")
-foreach(var ${SOURCE_FILES})
-    message(STATUS ${var})
-endforeach()
-message(STATUS "========================================================")
-
+add_subdirectory(App)

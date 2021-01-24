@@ -1,6 +1,5 @@
 {
     "CMakeSettings": {
-        "ProjectName":  "CppStudy",
         "Generator":    "Ninja",
         "CompilerID":   "clang",
         "BinaryDir":    "Build",
@@ -8,6 +7,9 @@
         "BuildType":    "DEBUG",
         "USE32bit":     "false",
         "LLVM_VERSION": "10"
+    },
+    "DebugEnv": {
+        "Target": "DirectStorageRW"
     },
     "files.associations": {
         "iostream": "cpp"
