@@ -4,7 +4,7 @@ include(config.cmake)
 
 project(
     # project name
-    "dsrw"
+    "DSRW_App"
     # description
     DESCRIPTION ""
     # version
@@ -17,6 +17,6 @@ project(
 
 load_config()
 
-make_autoconfig("Include")
+make_autoconfig("Include" "APP")
 
 build_exec()

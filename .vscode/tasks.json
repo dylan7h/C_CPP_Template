@@ -68,7 +68,7 @@
 		{
 			"type": "shell",
 			"label": "Run Without Debugging",
-			"command": "${workspaceFolder}/${config:CMakeSettings.BinaryDir}/${config:CMakeSettings.ProjectName}",
+			"command": "${workspaceFolder}/${config:CMakeSettings.BinaryDir}/Binary/${config:DebugEnv.Target}",
 			"args": [],
 			"options": {
 				"cwd": "${workspaceFolder}"

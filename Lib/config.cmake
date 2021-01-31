@@ -33,6 +33,5 @@ add_inc("Include")
 # Source Lists
 #====================================
 add_src("Source/main.cpp")
-add_src("Source/RegEdit.cpp")
 
 endmacro()

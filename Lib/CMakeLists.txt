@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 
+include(config.cmake)
+
 project(
     # project name
-    "Lib"
+    "DSRW_Lib"
     # description
     DESCRIPTION ""
     # version
@@ -12,3 +14,9 @@ project(
     # language
     LANGUAGES CXX
 )
+
+load_config()
+
+make_autoconfig("Include" "LIB")
+
+build_exec()

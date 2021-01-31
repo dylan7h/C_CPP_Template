@@ -1,8 +1,13 @@
 #include <iostream>
+#include "RegEdit.h"
+using namespace std;
 
 int main(void)
 {
-    std::cout << "Hello DS" << std::endl;
+    DWORD dwResult; 
+    CRegEdit::GetRegValue("HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Services/disk/Enum", "Count", dwResult);
+
+    cout << "dwResult: " << dwResult << endl;
 
     return 0;
 }
