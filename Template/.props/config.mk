@@ -8,7 +8,7 @@ FILE_EXT		:=	elf
 BUILD_MODE		:=	debug
 
 # Display Build Log( 0 | 1 )
-BUILD_VERBOSE	:=	0
+BUILD_VERBOSE	:=	1
 
 # C Standard Version
 C_STANDARD_VER		:= 	99
@@ -26,8 +26,12 @@ LDFLAGS			:= -static
 
 ifeq ($(BUILD_MODE), debug)
 	CFLAGS		+= -g
+	CXXFLAGS	+= -g
+	LDFLAGS		+= -g
 else ifeq ($(BUILD_MODE), release)
 	CFLAGS		+= -O2
+	CXXFLAGS	+= -O2
+	LDFLAGS		+= -O2
 else
 	#error "Invalid BUILD_MODE"
 endif
