@@ -8,7 +8,7 @@ FILE_EXT		:=	elf
 BUILD_MODE		:=	debug
 
 # Display Build Log( 0 | 1 )
-BUILD_VERBOSE	:=	1
+BUILD_VERBOSE	:=	0
 
 # C Standard Version
 C_STANDARD_VER		:= 	99
@@ -20,8 +20,8 @@ INSTRUCTION_SET	:=	64
 #============================================================
 # Set Compile & Link Options by Configurations
 #============================================================
-CFLAGS			:= -m$(INSTRUCTION_SET) -std=c$(C_STANDARD_VER) -Wall
-CXXFLAGS		:= -m$(INSTRUCTION_SET) -std=c++$(CXX_STANDARD_VER) -Wall
+CFLAGS			:= -m$(INSTRUCTION_SET) -std=c$(C_STANDARD_VER) -Wall -pedantic
+CXXFLAGS		:= -m$(INSTRUCTION_SET) -std=c++$(CXX_STANDARD_VER) -Wall -pedantic
 LDFLAGS			:= -static
 
 ifeq ($(BUILD_MODE), debug)
