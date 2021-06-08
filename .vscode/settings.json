@@ -1,5 +1,6 @@
 {
     "Makefile": {
-        "TARGET": "Template"
+        "TARGET": "Template",
+        "EXTENSION": "elf"
     }
 }

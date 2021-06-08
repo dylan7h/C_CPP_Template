@@ -8,7 +8,7 @@
             "name": "(gdb) 시작",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/elf/${config:Makefile.TARGET}.elf",
+            "program": "${workspaceFolder}/build/elf/${config:Makefile.TARGET}.${config:Makefile.EXTENSION}",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -21,7 +21,8 @@
                 "engineLogging": true,
                 "exceptions": true,
                 "moduleLoad": true,
-                "programOutput": true},
+                "programOutput": true
+            },
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
