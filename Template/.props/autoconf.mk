@@ -31,4 +31,7 @@ make_autoconf: mkdir
 	then 																	\
 		mkdir -p $(AUTO_CONF_DIR) ;											\
 		rm -f $(AUTO_CONF_DIR)/autoconf.h;									\
+		echo "#ifndef __AUTO_CONF_H__" > $(AUTO_CONF_DIR)/autoconf.h ;		\
+		echo "#define __AUTO_CONF_H__" >> $(AUTO_CONF_DIR)/autoconf.h ;		\
+		echo "#endif /* !__AUTO_CONF_H__ */" >> $(AUTO_CONF_DIR)/autoconf.h ;	\
 	fi
