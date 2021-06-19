@@ -18,3 +18,7 @@ debug:
 
 info:
 	@$(MAKE) -C $(TARGET) info --no-print-directory
+
+make_autoconf:
+	@$(MAKE) -C $(TARGET) make_autoconf --no-print-directory
+	

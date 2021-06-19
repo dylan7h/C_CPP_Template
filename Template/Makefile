@@ -8,15 +8,15 @@ TARGET		:=	$(notdir $(CURDIR))
 #============================================================
 # Include Build Environments
 #============================================================
+include $(CURDIR)/.props/path.mk
 include $(CURDIR)/.props/toolchain.mk
 include $(CURDIR)/.props/config.mk
-include $(CURDIR)/.props/path.mk
 
 
 #============================================================
 # Default Make Target
 #============================================================
-all: $(ASM_DIR)/$(TARGET).asm
+all: make_autoconf $(ASM_DIR)/$(TARGET).asm
 	
 
 #============================================================
@@ -40,7 +40,7 @@ run: all
 #============================================================
 # Link Object files --> Make ELF File
 #============================================================
-$(ELF_DIR)/$(TARGET).$(FILE_EXT): mkdir $(DEPS) $(OBJS)
+$(ELF_DIR)/$(TARGET).$(FILE_EXT): $(OBJS)
 	@printf "%-10s $@\n" "LD"
 	$(V)$(CXX) -o $@ $(OBJS) $(LIB_DIR) $(LIBS) -Wl,-Map=$(MAP_DIR)/$(TARGET).map $(LDFLAGS)
 
@@ -67,43 +67,25 @@ mkdir:
 
 
 #============================================================
-# Make dependency files
-#============================================================
-# From *.s files
-$(DEF_DIR)/%.d: %.s
-	@mkdir -p $(dir $@)
-	$(V)$(CC) $(INCS) $(CFLAGS) -M $< > $@
-
-# From *.c files
-$(DEF_DIR)/%.d: %.c
-	@mkdir -p $(dir $@)
-	$(V)$(CC) $(INCS) $(CFLAGS) -M $< > $@
-
-# From *.cpp files
-$(DEF_DIR)/%.d: %.cpp
-	@mkdir -p $(dir $@)
-	$(V)$(CXX) $(INCS) $(CXXFLAGS) -M $< > $@
-
-#============================================================
 # Compile Source files
 #============================================================
 # From *.s files
 $(OBJ_DIR)/%.o:	%.s
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "AS"
-	$(V)$(CC) $(INCS) $(CFLAGS) -c $< -o $@ -MMD -MF $(DEF_DIR)/$*.d
+	$(V)$(CC) $(INCS) $(CFLAGS) -c $< -o $@ 
 
 # From *.c files
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "CC"
-	$(V)$(CC) $(INCS) $(CFLAGS) -c $< -o $@ -MMD -MF $(DEF_DIR)/$*.d
+	$(V)$(CC) $(INCS) $(CFLAGS) -c $< -o $@
 
 # From *.cpp files
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "CXX"
-	$(V)$(CXX) $(INCS) $(CXXFLAGS) -c $< -o $@ -MMD -MF $(DEF_DIR)/$*.d
+	$(V)$(CXX) $(INCS) $(CXXFLAGS) -c $< -o $@
 
 
 #============================================================
@@ -121,3 +103,4 @@ info:
 	$(info AFLAGS   : $(AFLAGS))
 	$(info CFLAGS   : $(CFLAGS))
 	$(info LDFLAGS  : $(LDFLAGS))
+
