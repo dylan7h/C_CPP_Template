@@ -33,7 +33,7 @@ INSTRUCTION_SET		:=	64
 COMMON_FLAGS		:= -m$(INSTRUCTION_SET) -W -Wall -pedantic-errors
 CFLAGS				:= $(COMMON_FLAGS) -std=$(C_STANDARD_VER) 
 CXXFLAGS			:= $(COMMON_FLAGS) -std=$(CXX_STANDARD_VER)
-LDFLAGS				:=
+LDFLAGS				:= $(COMMON_FLAGS)
 
 
 # Type Of Build
