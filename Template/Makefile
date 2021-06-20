@@ -10,13 +10,13 @@ TARGET		:=	$(notdir $(CURDIR))
 #============================================================
 include $(CURDIR)/.props/path.mk
 include $(CURDIR)/.props/toolchain.mk
-include $(CURDIR)/.props/config.mk
+include $(CURDIR)/.props/basic_config.mk
 
 
 #============================================================
 # Default Make Target
 #============================================================
-all: make_autoconf $(ASM_DIR)/$(TARGET).asm
+all: mkdir make_autoconf $(ASM_DIR)/$(TARGET).asm
 	
 
 #============================================================
@@ -86,6 +86,49 @@ $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "CXX"
 	$(V)$(CXX) $(INCS) $(CXXFLAGS) -c $< -o $@
+
+
+#============================================================
+# Make 'autoconf.h'
+#============================================================
+make_autoconf:
+# Check if the file exists
+	@IS_EXIST_DEF_FILE=$$(test -s $(DEF_DIR)/$(TARGET).def && echo -n y); 							\
+	if [ "$${IS_EXIST_DEF_FILE}" != "y" ]; 															\
+	then 																							\
+		echo "$(DEFINES)" > $(DEF_DIR)/$(TARGET).def; 												\
+		IS_INVALIDATE_DEF=y; 																		\
+	else 																							\
+		DEFINES_FROM_FILE=$$(cat $(DEF_DIR)/$(TARGET).def); 										\
+		if [ "$${DEFINES_FROM_FILE}" != "$(DEFINES)" ]; 											\
+		then 																						\
+			IS_INVALIDATE_DEF=y; 																	\
+		fi; 																						\
+	fi; 																							\
+																									\
+	if [ "$${IS_INVALIDATE_DEF}" = "y" ]; 															\
+	then 																							\
+		echo "Generating 'autodonfig.h'...";														\
+		mkdir -p $(AUTO_CONF_DIR);																	\
+		rm -f $(AUTO_CONF_DIR)/autoconf.h;															\
+		echo "#ifndef __AUTO_CONF_H__" > $(AUTO_CONF_DIR)/autoconf.h;								\
+		echo "#define __AUTO_CONF_H__\n" >> $(AUTO_CONF_DIR)/autoconf.h;							\
+		for ITEM in $(DEFINES); 																	\
+		do 																							\
+			DEFINE_SYMBOL=$${ITEM%%=*}; 															\
+			DEFINE_VALUE=$${ITEM##*=}; 																\
+			echo "#ifndef $${DEFINE_SYMBOL}" >> $(AUTO_CONF_DIR)/autoconf.h;						\
+			if [ -z $${DEFINE_VALUE} ];														 		\
+			then 																					\
+				echo "#define $${DEFINE_SYMBOL}" >> $(AUTO_CONF_DIR)/autoconf.h;					\
+			else																					\
+				echo "#define $${DEFINE_SYMBOL} ($${DEFINE_VALUE})" >> $(AUTO_CONF_DIR)/autoconf.h;	\
+			fi;																						\
+			echo "#endif /* !$${DEFINE_SYMBOL} */\n" >> $(AUTO_CONF_DIR)/autoconf.h;				\
+		done; 																						\
+		echo "#endif /* !__AUTO_CONF_H__ */" >> $(AUTO_CONF_DIR)/autoconf.h;						\
+		echo "Generating is done!";																	\
+	fi
 
 
 #============================================================

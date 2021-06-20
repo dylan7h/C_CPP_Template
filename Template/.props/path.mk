@@ -35,7 +35,13 @@ LIB_DIR		:=
 #============================================================
 # Name of Libraries
 #============================================================
-LIB_NAME	:= gcc
+# System Lib
+ifeq ($(OS),Windows_NT)
+	LIB_NAME		:=	kernel32 user32 gdi32 winspool shell32 ole32 oleaut32 uuid comdlg32 advapi32 oldnames
+endif
+
+# User Lib
+LIB_NAME	+=
 
 #============================================================
 # Convert Object & Denpendency file lists from Source Lists

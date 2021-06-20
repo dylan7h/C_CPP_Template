@@ -1,7 +1,7 @@
 #============================================================
-# Include 'autoconf.mk'
+# Include 'function.mk'
 #============================================================
-include $(CURDIR)/.props/autoconf.mk
+include $(CURDIR)/.props/function.mk
 
 
 #============================================================
@@ -37,6 +37,9 @@ ifeq ($(BUILD_MODE), debug)
 	CFLAGS			+= -g
 	CXXFLAGS		+= -g
 	LDFLAGS			+= -g
+
+$(call add_define,DEBUG)
+$(call add_define,_DEBUG)
 else ifeq ($(BUILD_MODE), release)
 	CFLAGS			+= -O2
 	CXXFLAGS		+= -O2
@@ -58,10 +61,3 @@ ifeq ($(OS),Windows_NT)
 else
 	FILE_EXT		:=	elf
 endif
-
-
-$(call add_define,DEBUG)
-$(call add_define,_DEBUG)
-$(call add_define,VERSION,10)
-$(call add_define,EVT,1)
-$(call add_define,STD,99)
