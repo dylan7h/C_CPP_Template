@@ -16,9 +16,9 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "logging": {
-                "trace": true, 
-                "traceResponse": true,
-                "engineLogging": true,
+                "trace": false, 
+                "traceResponse": false,
+                "engineLogging": false,
                 "exceptions": true,
                 "moduleLoad": true,
                 "programOutput": true
