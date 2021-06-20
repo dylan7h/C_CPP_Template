@@ -31,6 +31,18 @@
                 }
             ],
             "preLaunchTask": "build"
+        },
+        {
+            "name": "cl.exe - 활성 파일 빌드 및 디버그",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/elf/${config:Makefile.TARGET}.${config:Makefile.EXTENSION}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "externalTerminal",
+            "preLaunchTask": "build"
         }
     ]
 }

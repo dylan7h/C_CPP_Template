@@ -17,7 +17,7 @@ LIB_TYPE			:= 	static
 BUILD_MODE			:=	debug
 
 # Display Build Log( 0 | 1 )
-BUILD_VERBOSE		:=	1
+BUILD_VERBOSE		:=	0
 
 # C Standard Version
 C_STANDARD_VER		:= 	gnu89
