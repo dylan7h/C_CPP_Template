@@ -54,7 +54,7 @@ $(ELF_DIR)/$(TARGET).$(EXE_EXT): $(OBJS)
 #============================================================
 $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(STATIC_LIB_EXT): $(OBJS)
 	@printf "%-10s $@\n" "AR"
-	$(V)$(AR) $(ARFLAGS) -o $@ $(OBJS)
+	$(V)$(AR) rcs -o $@ $(OBJS)
 
 
 #============================================================
@@ -62,7 +62,7 @@ $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(STATIC_LIB_EXT): $(OBJS)
 #============================================================
 $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(SHARED_LIB_EXT): $(OBJS)
 	@printf "%-10s $@\n" "AR"
-	$(V)$(CXX) $(ARFLAGS) -o $@ $(OBJS)
+	$(V)$(CXX) -shared $(COMMON_FLAGS) -o $@ $(OBJS)
 
 
 #============================================================
@@ -85,19 +85,19 @@ mkdir:
 $(OBJ_DIR)/%.o:	%.s
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "AS"
-	$(V)$(CC) $(INCS) $(CFLAGS) -c $< -o $@ 
+	$(V)$(CC) $(INCS) $(CFLAGS) -c $< -o $@ -MMD -MP
 
 # From *.c files
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "CC"
-	$(V)$(CC) $(INCS) $(CFLAGS) -c $< -o $@
+	$(V)$(CC) $(INCS) $(CFLAGS) -c $< -o $@ -MMD -MP
 
 # From *.cpp files
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "CXX"
-	$(V)$(CXX) $(INCS) $(CXXFLAGS) -c $< -o $@
+	$(V)$(CXX) $(INCS) $(CXXFLAGS) -c $< -o $@ -MMD -MP
 
 
 #============================================================

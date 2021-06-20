@@ -17,7 +17,7 @@ LIB_TYPE			:= 	static
 BUILD_MODE			:=	debug
 
 # Display Build Log( 0 | 1 )
-BUILD_VERBOSE		:=	0
+BUILD_VERBOSE		:=	1
 
 # C Standard Version
 C_STANDARD_VER		:= 	gnu89
@@ -30,11 +30,10 @@ INSTRUCTION_SET		:=	64
 #============================================================
 # Set Compile & Link Options by Configurations
 #============================================================
-COMMON_FLAGS		:= -m$(INSTRUCTION_SET) -W -Wall -pedantic-errors -MMD -MP
+COMMON_FLAGS		:= -m$(INSTRUCTION_SET) -W -Wall -pedantic-errors
 CFLAGS				:= $(COMMON_FLAGS) -std=$(C_STANDARD_VER) 
 CXXFLAGS			:= $(COMMON_FLAGS) -std=$(CXX_STANDARD_VER)
 LDFLAGS				:=
-ARFLAGS				:=
 
 
 # Type Of Build
@@ -81,12 +80,10 @@ else
 
 ifeq ($(LIB_TYPE),static)
 	FILE_EXT		:=	$(STATIC_LIB_EXT)
-	ARFLAGS			+=	rcs
 else
 	FILE_EXT		:=	$(SHARED_LIB_EXT)
 	CFLAGS			+= 	-fPIC
 	CXXFLAGS		+=	-fPIC
-	ARFLAGS			+=	-shared
 endif
 
 endif
