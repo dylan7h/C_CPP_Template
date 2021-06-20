@@ -7,7 +7,11 @@ include $(CURDIR)/.props/function.mk
 #============================================================
 # Set Configurations
 #============================================================
+# Build Type( exe | lib )
+BUILD_TYPE			:= 	exe
 
+# Build Type( static | shared )
+LIB_TYPE			:= 	static
 
 # Build Mode( debug | release )
 BUILD_MODE			:=	debug
@@ -29,7 +33,8 @@ INSTRUCTION_SET		:=	64
 COMMON_FLAGS		:= -m$(INSTRUCTION_SET) -W -Wall -pedantic-errors -MMD -MP
 CFLAGS				:= $(COMMON_FLAGS) -std=$(C_STANDARD_VER) 
 CXXFLAGS			:= $(COMMON_FLAGS) -std=$(CXX_STANDARD_VER)
-LDFLAGS				:= 
+LDFLAGS				:=
+ARFLAGS				:=
 
 
 # Type Of Build
@@ -57,7 +62,31 @@ endif
 
 # Dependency Of OS Platform
 ifeq ($(OS),Windows_NT)
-	FILE_EXT		:=	exe
+	EXE_EXT			:=	exe
+	STATIC_LIB_EXT	:= 	lib
+	SHARED_LIB_EXT	:= 	dll
 else
-	FILE_EXT		:=	elf
+	EXE_EXT			:=	elf
+	STATIC_LIB_EXT	:= 	a
+	SHARED_LIB_EXT	:= 	so
+endif
+
+
+
+# Set Build Type
+ifeq ($(BUILD_TYPE),exe)
+	FILE_EXT		:=	$(EXE_EXT)
+else
+	TARGET_PREFIX	:=	lib
+
+ifeq ($(LIB_TYPE),static)
+	FILE_EXT		:=	$(STATIC_LIB_EXT)
+	ARFLAGS			+=	rcs
+else
+	FILE_EXT		:=	$(SHARED_LIB_EXT)
+	CFLAGS			+= 	-fPIC
+	CXXFLAGS		+=	-fPIC
+	ARFLAGS			+=	-shared
+endif
+
 endif

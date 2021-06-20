@@ -16,7 +16,7 @@ include $(CURDIR)/.props/basic_config.mk
 #============================================================
 # Default Make Target
 #============================================================
-all: mkdir make_autoconf $(ASM_DIR)/$(TARGET).asm
+all: mkdir make_autoconf $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(FILE_EXT)
 	
 
 #============================================================
@@ -26,7 +26,9 @@ clean:
 	@printf "%-10s Product of $(TARGET)\n" "RM"
 	$(V)rm -rf $(OBJ_DIR)/*
 	$(V)rm -rf $(DEF_DIR)/*
-	$(V)rm -rf $(ELF_DIR)/$(TARGET).$(FILE_EXT)
+	$(V)rm -rf $(ELF_DIR)/$(TARGET).$(EXE_EXT)
+	$(V)rm -rf $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(STATIC_LIB_EXT)
+	$(V)rm -rf $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(SHARED_LIB_EXT)
 	$(V)rm -rf $(MAP_DIR)/$(TARGET).map
 	$(V)rm -rf $(ASM_DIR)/$(TARGET).asm
 
@@ -34,23 +36,33 @@ clean:
 # Run Target
 #============================================================
 run: all
-	$(ELF_DIR)/$(TARGET).$(FILE_EXT)
+	$(ELF_DIR)/$(TARGET).$(EXE_EXT)
 
 
 #============================================================
 # Link Object files --> Make ELF File
 #============================================================
-$(ELF_DIR)/$(TARGET).$(FILE_EXT): $(OBJS)
+$(ELF_DIR)/$(TARGET).$(EXE_EXT): $(OBJS)
 	@printf "%-10s $@\n" "LD"
 	$(V)$(CXX) -o $@ $(OBJS) $(LIB_DIR) $(LIBS) -Wl,-Map=$(MAP_DIR)/$(TARGET).map $(LDFLAGS)
+	@printf "%-10s $(ASM_DIR)/$(TARGET).asm\n" "OD"
+	$(V)$(OD) -d $@ > $(ASM_DIR)/$(TARGET).asm
 
 
 #============================================================
-# Extract Assembly File
+# Static Lib
 #============================================================
-$(ASM_DIR)/$(TARGET).asm: $(ELF_DIR)/$(TARGET).$(FILE_EXT)
-	@printf "%-10s $@\n" "OD"
-	$(V)$(OD) -d $< > $@
+$(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(STATIC_LIB_EXT): $(OBJS)
+	@printf "%-10s $@\n" "AR"
+	$(V)$(AR) $(ARFLAGS) -o $@ $(OBJS)
+
+
+#============================================================
+# Shared Lib
+#============================================================
+$(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(SHARED_LIB_EXT): $(OBJS)
+	@printf "%-10s $@\n" "AR"
+	$(V)$(CXX) $(ARFLAGS) -o $@ $(OBJS)
 
 
 #============================================================
