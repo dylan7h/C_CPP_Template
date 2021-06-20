@@ -1,10 +1,10 @@
 #============================================================
 # Set Toolchain
 #============================================================
-AS	:= as
+AS	:= llvm-as
 CC	:= clang
 CXX	:= clang++
-AR	:= ar
+AR	:= llvm-ar
 LD	:= llvm-ld
 OD	:= llvm-objdump
 OC	:= llvm-objcopy

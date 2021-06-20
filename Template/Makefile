@@ -54,7 +54,7 @@ $(ELF_DIR)/$(TARGET).$(EXE_EXT): $(OBJS)
 #============================================================
 $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(STATIC_LIB_EXT): $(OBJS)
 	@printf "%-10s $@\n" "AR"
-	$(V)$(AR) rcs -o $@ $(OBJS)
+	$(V)$(AR) rcs $@ $(OBJS)
 
 
 #============================================================
