@@ -1,10 +1,15 @@
 #============================================================
 # Set Toolchain
 #============================================================
-AS	:= llvm-as
-CC	:= clang
-CXX	:= clang++
-AR	:= llvm-ar
-LD	:= llvm-ld
-OD	:= llvm-objdump
-OC	:= llvm-objcopy
+CROSS_COMPILE	:=
+
+AS				:= llvm-as
+CC				:= clang
+CXX				:= clang++
+AR				:= llvm-ar
+LD				:= ld.lld
+OD				:= llvm-objdump
+OC				:= llvm-objcopy
+NM				:= llvm-nm
+STRIP			:= llvm-strip
+READELF			:= llvm-readelf

@@ -8,9 +8,15 @@ TARGET		:=	$(notdir $(CURDIR))
 #============================================================
 # Include Build Environments
 #============================================================
-include $(CURDIR)/.props/path.mk
 include $(CURDIR)/.props/toolchain.mk
-include $(CURDIR)/.props/basic_config.mk
+include $(CURDIR)/.props/common.mk
+include $(CURDIR)/.props/util.mk
+include $(CURDIR)/.props/defines.mk
+include $(CURDIR)/.props/asm_options.mk
+include $(CURDIR)/.props/c_cpp_options.mk
+include $(CURDIR)/.props/linker_options.mk
+include $(CURDIR)/.props/build_path.mk
+include $(CURDIR)/.props/addxxxfix.mk
 
 
 #============================================================
@@ -24,8 +30,8 @@ all: mkdir make_autoconf $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(FILE_EXT)
 #============================================================
 clean:
 	@printf "%-10s Product of $(TARGET)\n" "RM"
-	$(V)rm -rf $(OBJ_DIR)/*
-	$(V)rm -rf $(DEF_DIR)/*
+	$(V)rm -rf $(OBJ_DIR)/$(TARGET)
+	$(V)rm -rf $(DEF_DIR)/$(TARGET).def
 	$(V)rm -rf $(ELF_DIR)/$(TARGET).$(EXE_EXT)
 	$(V)rm -rf $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(STATIC_LIB_EXT)
 	$(V)rm -rf $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(SHARED_LIB_EXT)
@@ -44,9 +50,9 @@ run: all
 #============================================================
 $(ELF_DIR)/$(TARGET).$(EXE_EXT): $(OBJS)
 	@printf "%-10s $@\n" "LD"
-	$(V)$(CXX) -o $@ $(OBJS) $(LIB_DIR) $(LIBS) -Wl,-Map=$(MAP_DIR)/$(TARGET).map $(LDFLAGS)
+	$(V)$(CROSS_COMPILE)$(CC) -m$(INSTRUCTION_SET) -o $@ $(OBJS) $(LIB_DIR) $(LIBS) -Wl,-Map=$(MAP_DIR)/$(TARGET).map $(LDFLAGS)
 	@printf "%-10s $(ASM_DIR)/$(TARGET).asm\n" "OD"
-	$(V)$(OD) -d $@ > $(ASM_DIR)/$(TARGET).asm
+	$(V)$(CROSS_COMPILE)$(OD) -d $@ > $(ASM_DIR)/$(TARGET).asm
 
 
 #============================================================
@@ -54,7 +60,7 @@ $(ELF_DIR)/$(TARGET).$(EXE_EXT): $(OBJS)
 #============================================================
 $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(STATIC_LIB_EXT): $(OBJS)
 	@printf "%-10s $@\n" "AR"
-	$(V)$(AR) rcs $@ $(OBJS)
+	$(V)$(CROSS_COMPILE)$(AR) rvcs $@ $(OBJS)
 
 
 #============================================================
@@ -62,7 +68,7 @@ $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(STATIC_LIB_EXT): $(OBJS)
 #============================================================
 $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(SHARED_LIB_EXT): $(OBJS)
 	@printf "%-10s $@\n" "AR"
-	$(V)$(CXX) -shared $(COMMON_FLAGS) -o $@ $(OBJS)
+	$(V)$(CROSS_COMPILE)$(CC) -shared -fpic -o $@ $(OBJS)
 
 
 #============================================================
@@ -85,19 +91,19 @@ mkdir:
 $(OBJ_DIR)/%.o:	%.s
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "AS"
-	$(V)$(CC) $(INCS) $(CFLAGS) -c $< -o $@ -MMD -MP
+	$(V)$(CROSS_COMPILE)$(CC) $(CFLAGS) $(INCS) -c $< -o $@ -MMD -MP
 
 # From *.c files
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "CC"
-	$(V)$(CC) $(INCS) $(CFLAGS) -c $< -o $@ -MMD -MP
+	$(V)$(CROSS_COMPILE)$(CC) $(CFLAGS) $(INCS) -c $< -o $@ -MMD -MP
 
 # From *.cpp files
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "CXX"
-	$(V)$(CXX) $(INCS) $(CXXFLAGS) -c $< -o $@ -MMD -MP
+	$(V)$(CROSS_COMPILE)$(CXX) $(CXXFLAGS) $(INCS) -c $< -o $@ -MMD -MP
 
 
 #============================================================
@@ -159,3 +165,5 @@ info:
 	$(info CFLAGS   : $(CFLAGS))
 	$(info LDFLAGS  : $(LDFLAGS))
 
+# Include dependency file to have gcc recompile necessary sources  
+-include $(DEPS)  
