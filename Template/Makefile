@@ -8,8 +8,8 @@ TARGET		:=	$(notdir $(CURDIR))
 #============================================================
 # Include Build Environments
 #============================================================
-include $(CURDIR)/.props/toolchain.mk
 include $(CURDIR)/.props/common.mk
+include $(CURDIR)/.props/toolchain.mk
 include $(CURDIR)/.props/util.mk
 include $(CURDIR)/.props/defines.mk
 include $(CURDIR)/.props/asm_options.mk
@@ -50,9 +50,10 @@ run: all
 #============================================================
 $(ELF_DIR)/$(TARGET).$(EXE_EXT): $(OBJS)
 	@printf "%-10s $@\n" "LD"
-	$(V)$(CROSS_COMPILE)$(CC) -m$(INSTRUCTION_SET) -o $@ $(OBJS) $(LIB_DIR) $(LIBS) -Wl,-Map=$(MAP_DIR)/$(TARGET).map $(LDFLAGS)
+	$(V)$(CROSS_COMPILE)$(CC) -m$(INSTRUCTION_SET) $(LDFLAGS) -Wl,-Map=$(MAP_DIR)/$(TARGET).map $(LIB_DIR) $(LIBS) -o $@ $(OBJS) 
 	@printf "%-10s $(ASM_DIR)/$(TARGET).asm\n" "OD"
 	$(V)$(CROSS_COMPILE)$(OD) -d $@ > $(ASM_DIR)/$(TARGET).asm
+	$(V)$(CROSS_COMPILE)$(SZ) $@
 
 
 #============================================================
@@ -91,7 +92,7 @@ mkdir:
 $(OBJ_DIR)/%.o:	%.s
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "AS"
-	$(V)$(CROSS_COMPILE)$(CC) $(CFLAGS) $(INCS) -c $< -o $@ -MMD -MP
+	$(V)$(CROSS_COMPILE)$(CC) -m$(INSTRUCTION_SET) $(AFLAGS) $(INCS) -c $< -o $@ -MMD -MP
 
 # From *.c files
 $(OBJ_DIR)/%.o: %.c
@@ -126,7 +127,7 @@ make_autoconf:
 																										\
 	if [ "$${IS_INVALIDATE_DEF}" = "y" ]; 																\
 	then 																								\
-		echo "Generating 'autodonfig.h'...";															\
+		printf "Generating 'autodonfig.h'..";															\
 		mkdir -p $(AUTO_CONF_DIR);																		\
 		rm -f $(AUTO_CONF_DIR)/autoconf.h;																\
 		printf "#ifndef __AUTO_CONF_H__\n" > $(AUTO_CONF_DIR)/autoconf.h;								\
@@ -143,9 +144,10 @@ make_autoconf:
 				printf "#define $${DEFINE_SYMBOL} ($${DEFINE_VALUE})\n" >> $(AUTO_CONF_DIR)/autoconf.h;	\
 			fi;																							\
 			printf "#endif /* !$${DEFINE_SYMBOL} */\n\n" >> $(AUTO_CONF_DIR)/autoconf.h;				\
+			printf ".";																					\
 		done; 																							\
 		printf "#endif /* !__AUTO_CONF_H__ */\n" >> $(AUTO_CONF_DIR)/autoconf.h;						\
-		echo "Generating is done!";																		\
+		echo " done!";																		\
 	fi
 
 

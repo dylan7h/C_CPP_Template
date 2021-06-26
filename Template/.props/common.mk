@@ -5,7 +5,7 @@ BUILD_TYPE			:= 	exe
 BUILD_MODE			:=	debug
 
 # Display Build Log( 0 | 1 )
-BUILD_VERBOSE		:=	0
+BUILD_VERBOSE		:=	1
 
 # Instruction Set
 # x86_64	( 32 | 64 )
