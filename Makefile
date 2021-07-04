@@ -1,8 +1,13 @@
 export TARGET	:= Template
 export TOPDIR	:= ..
 
+# Job Count
+JOB_CNT			:= 8
+
 all:
-	@$(MAKE) -C $(TARGET) --no-print-directory
+	@$(MAKE) -C $(TARGET) mkdir --no-print-directory
+	@$(MAKE) -C $(TARGET) make_autoconf --no-print-directory
+	@$(MAKE) -C $(TARGET) -j $(JOB_CNT) --no-print-directory
 
 clean:
 	@$(MAKE) -C $(TARGET) clean --no-print-directory
@@ -10,15 +15,11 @@ clean:
 distclean:
 	rm -rf build/*
 
-run:
-	@$(MAKE) -C $(TARGET) run --no-print-directory
+run: all
+	@$(MAKE) -C $(TARGET) -j $(JOB_CNT) run --no-print-directory
 
-debug:
-	@$(MAKE) -C $(TARGET) debug --no-print-directory
+debug: all
+	@$(MAKE) -C $(TARGET) -j $(JOB_CNT) debug --no-print-directory
 
 info:
 	@$(MAKE) -C $(TARGET) info --no-print-directory
-
-make_autoconf:
-	@$(MAKE) -C $(TARGET) make_autoconf --no-print-directory
-	
