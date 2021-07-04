@@ -23,10 +23,14 @@ ifeq ($(OS),Windows_NT)
 	EXE_EXT			:=	exe
 	STATIC_LIB_EXT	:= 	lib
 	SHARED_LIB_EXT	:= 	dll
+
+	ASSIGN_OP		:=	:
 else
 	EXE_EXT			:=	elf
 	STATIC_LIB_EXT	:= 	a
 	SHARED_LIB_EXT	:= 	so
+
+	ASSIGN_OP		:=	=
 endif
 
 # Set Build Type

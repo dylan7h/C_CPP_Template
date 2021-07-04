@@ -50,7 +50,7 @@ run: all
 #============================================================
 $(ELF_DIR)/$(TARGET).$(EXE_EXT): $(OBJS)
 	@printf "%-10s $@\n" "LD"
-	$(V)$(CROSS_COMPILE)$(CXX) -m$(INSTRUCTION_SET) $(LDFLAGS) -Wl,-Map=$(MAP_DIR)/$(TARGET).map $(LIB_DIR) $(LIBS) -o $@ $(OBJS) 
+	$(V)$(CROSS_COMPILE)$(CXX) -m$(INSTRUCTION_SET) $(LDFLAGS) -Wl,-Map$(ASSIGN_OP)$(MAP_DIR)/$(TARGET).map $(LIB_DIR) $(LIBS) -o $@ $(OBJS) 
 	@printf "%-10s $(ASM_DIR)/$(TARGET).asm\n" "OD"
 	$(V)$(CROSS_COMPILE)$(OD) -d $@ > $(ASM_DIR)/$(TARGET).asm
 	$(V)$(CROSS_COMPILE)$(SZ) $@
