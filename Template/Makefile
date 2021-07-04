@@ -8,15 +8,15 @@ TARGET		:=	$(notdir $(CURDIR))
 #============================================================
 # Include Build Environments
 #============================================================
-include $(CURDIR)/.props/common.mk
-include $(CURDIR)/.props/toolchain.mk
-include $(CURDIR)/.props/util.mk
-include $(CURDIR)/.props/defines.mk
-include $(CURDIR)/.props/asm_options.mk
-include $(CURDIR)/.props/c_cpp_options.mk
-include $(CURDIR)/.props/linker_options.mk
-include $(CURDIR)/.props/build_path.mk
-include $(CURDIR)/.props/addxxxfix.mk
+include $(CURDIR)/.props/00_common.mk
+include $(CURDIR)/.props/01_toolchain.mk
+include $(CURDIR)/.props/02_util.mk
+include $(CURDIR)/.props/03_build_path.mk
+include $(CURDIR)/.props/04_defines.mk
+include $(CURDIR)/.props/05_asm_options.mk
+include $(CURDIR)/.props/06_c_cpp_options.mk
+include $(CURDIR)/.props/07_linker_options.mk
+include $(CURDIR)/.props/08_addxxxfix.mk
 
 
 #============================================================
