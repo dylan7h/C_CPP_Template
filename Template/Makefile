@@ -50,7 +50,7 @@ run: all
 #============================================================
 $(ELF_DIR)/$(TARGET).$(EXE_EXT): $(OBJS)
 	@printf "%-10s $@\n" "LD"
-	$(V)$(CROSS_COMPILE)$(CC) -m$(INSTRUCTION_SET) $(LDFLAGS) -Wl,-Map=$(MAP_DIR)/$(TARGET).map $(LIB_DIR) $(LIBS) -o $@ $(OBJS) 
+	$(V)$(CROSS_COMPILE)$(CXX) -m$(INSTRUCTION_SET) $(LDFLAGS) -Wl,-Map=$(MAP_DIR)/$(TARGET).map $(LIB_DIR) $(LIBS) -o $@ $(OBJS) 
 	@printf "%-10s $(ASM_DIR)/$(TARGET).asm\n" "OD"
 	$(V)$(CROSS_COMPILE)$(OD) -d $@ > $(ASM_DIR)/$(TARGET).asm
 	$(V)$(CROSS_COMPILE)$(SZ) $@
@@ -69,7 +69,7 @@ $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(STATIC_LIB_EXT): $(OBJS)
 #============================================================
 $(ELF_DIR)/$(TARGET_PREFIX)$(TARGET).$(SHARED_LIB_EXT): $(OBJS)
 	@printf "%-10s $@\n" "AR"
-	$(V)$(CROSS_COMPILE)$(CC) -shared -fpic -o $@ $(OBJS)
+	$(V)$(CROSS_COMPILE)$(CXX) -shared -fpic -o $@ $(OBJS)
 
 
 #============================================================
@@ -88,20 +88,26 @@ mkdir:
 #============================================================
 # Compile Source files
 #============================================================
+# From *.S files
+$(OBJ_DIR)/%.S.o:	%.S
+	@mkdir -p $(dir $@)
+	@printf "%-10s $<\n" "AS"
+	$(V)$(CROSS_COMPILE)$(CC) -m$(INSTRUCTION_SET) $(AFLAGS) $(INCS) -c $< -o $@ -MMD -MP
+	
 # From *.s files
-$(OBJ_DIR)/%.o:	%.s
+$(OBJ_DIR)/%.s.o:	%.s
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "AS"
 	$(V)$(CROSS_COMPILE)$(CC) -m$(INSTRUCTION_SET) $(AFLAGS) $(INCS) -c $< -o $@ -MMD -MP
 
 # From *.c files
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.c.o: %.c
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "CC"
 	$(V)$(CROSS_COMPILE)$(CC) $(CFLAGS) $(INCS) -c $< -o $@ -MMD -MP
 
 # From *.cpp files
-$(OBJ_DIR)/%.o: %.cpp
+$(OBJ_DIR)/%.cpp.o: %.cpp
 	@mkdir -p $(dir $@)
 	@printf "%-10s $<\n" "CXX"
 	$(V)$(CROSS_COMPILE)$(CXX) $(CXXFLAGS) $(INCS) -c $< -o $@ -MMD -MP

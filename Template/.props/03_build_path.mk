@@ -18,14 +18,17 @@ INC_PATH		:=	include
 #============================================================
 # Path of Source lists
 #============================================================
+# Legacy Assembly
+LASRC	:=
+
 # Assembly
-ASRC			:=
+ASRC	:=
 
 # C Source
-CSRC			:= 	source/main.c
+CSRC	:= 	source/hello.c
 
 # C++ Source
-CXXSRC			:=
+CXXSRC	:=	source/hello.cpp
 
 #============================================================
 # Path of Libraries
