@@ -1,11 +1,11 @@
 # C Standard Version
-C_STANDARD_VER		:= 	gnu89
+C_STANDARD_VER		:= 	gnu11
 CXX_STANDARD_VER	:= 	c++14
 
 #============================================================
 # Set Compile Options by Configurations
 #============================================================
-C_CXX_COMMON_FLAGS	:= -m$(INSTRUCTION_SET) -W -Werror -Wall -pedantic-errors
+C_CXX_COMMON_FLAGS	:= -m$(INSTRUCTION_SET) -W -Werror -Wall
 
 
 # Build Mode
