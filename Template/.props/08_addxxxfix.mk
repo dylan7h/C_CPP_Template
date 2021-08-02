@@ -15,5 +15,12 @@ DEPS		+=	$(addprefix $(OBJ_DIR)/, $(CXXSRC:.cpp=.cpp.d))
 
 LIB_DIR		:=	$(addprefix -L, $(LIB_DIR))
 LIBS		:=	$(addprefix -l, $(LIB_NAME))
+
+
+ifneq ($(strip $(LINKER_FLAGS)),)
 LDFLAGS		=	$(addprefix -Wl,,$(LINKER_FLAGS))
+endif
+
+ifneq ($(strip $(ASSEMBLER_FLAGS)),)
 AFLAGS		=	$(addprefix -Wa,,$(ASSEMBLER_FLAGS))
+endif
